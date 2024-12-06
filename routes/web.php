@@ -1,0 +1,42 @@
+<?php
+
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\CategoriaController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/home', [ProductoController::class, 'index'])->name('home');
+Route::post('/home/add', [ProductoController::class, 'createProducto'])->name('add.product');
+Route::get('/home/edit/{id}', [ProductoController::class, 'editProductoView'])->name('editProduct.view');
+Route::post('/home/edit/{id}', [ProductoController::class, 'editProducto'])->name('editProduct');
+Route::get('/home/delete/{id}', [ProductoController::class, 'deleteProducto'])->name('deleteProduct');
+
+
+
+
+Route::get('/proveedor', [ProveedorController::class, 'index'])->name('proveedor');
+Route::post('/proveedor/add', [ProveedorController::class, 'createProveedor'])->name('add.proveedor');
+Route::get('/proveedor/edit/{id}', [ProveedorController::class, 'updateProveedorView'])->name('editProveedor.view');
+Route::post('/proveedor/edit/{id}', [ProveedorController::class, 'updateProveedor'])->name('editProveedor');
+Route::get('/proveedor/delete/{id}', [ProveedorController::class, 'deleteProveedor'])->name('deleteProveedor');
+
+
+Route::get('/categoria', [CategoriaController::class, 'index'])->name('categoria');
+Route::post('/categoria/add', [CategoriaController::class, 'createCategories'])->name('add.categoria');
+Route::get('/categoria/edit/{id}', [CategoriaController::class, 'editCategoriesView'])->name('editCategoria.view');
+Route::post('/categoria/edit/{id}', [CategoriaController::class, 'editCategories'])->name('editCategoria');
+Route::get('/categoria/delete/{id}', [CategoriaController::class, 'deleteCategories'])->name('deleteCategoria');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+require __DIR__.'/auth.php';
